@@ -55,6 +55,9 @@ public class Monopoly {
     }
 
     private static void playGame() {
+        String choice = input("Please enter the number of players\n"
+                + "from 2 - 6:");
+        
     }
 
     private static void close() {
@@ -68,5 +71,71 @@ public class Monopoly {
 
     private static void showRules() {
         output("");
+    }
+
+    private static String input(String text) {
+        String choice = JOptionPane.showInputDialog(
+                null, 
+                text, 
+                TITLE, 
+                3);
+        return choice;
+    }
+    /**
+     * Converts a String to an integer and calls isNumber
+     *
+     * @param input
+     * @return
+     */
+    private static int convert(String input) {
+        //checks if the string is even an integer to begin with
+        // this means that the isNumber method doesnt need to be
+        // called every time we use a number
+        if (isNumber(input) == false) {
+            return 0;
+        }
+        //converts the integer
+        int output = Integer.parseInt(input);
+        //returns the integer
+        return output;
+    }
+    /**
+     * Checks for valid inputs
+     *
+     * @param input - input given by the user
+     * @return - returns true or false
+     */
+    private static boolean isNumber(String input) {
+        if (input == null) {
+            System.out.println("null string");
+            return false;
+        } else if (input.equals("")) {
+            System.out.println("empty string");
+            return false;
+        } else {
+            // check for letters, non-digits
+            int decimalCount = 0;
+            for (int i = 0; i < input.length(); i++) {
+                char character = input.charAt(i);
+
+                int ascii = (int) character;
+
+                if (character == '.' && i != 0) {
+                    if (decimalCount <= 1) { // ok, move on                        
+                        decimalCount++;
+                    } else {
+                        return false;
+                    }
+                } else if (ascii == 45) {
+                    if (i != 0) {
+                        // ok, negative not in first spot
+                        return false;
+                    }
+                } else if (Character.isDigit(character) == false) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 }
