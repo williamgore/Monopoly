@@ -5,7 +5,7 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
 /**
- * Monopoly.java -
+ * Monopoly.java - to create a monopoly game
  *
  * @author William Gore & Raden Pablo
  * @since 23-May-2019
@@ -14,7 +14,8 @@ public class Monopoly {
 
     final static String TITLE = "Monopoly";
     final static String imageFile = "C:\\Users\\w.gore\\Desktop\\Monopoly.png";
-    
+    static Player[] players;
+
     /**
      * @param args the command line arguments
      */
@@ -22,42 +23,57 @@ public class Monopoly {
         int choice = intro();
         checkChoice(choice);
     }
+
     /**
      * Welcomes the player to the program
+     *
      * @return - returns the choice of action
      */
     private static int intro() {
         String[] options = {"Play Game", "Rules", "Quit"};
         Icon picture = new ImageIcon(imageFile);
         int choice = JOptionPane.showOptionDialog(
-                null, 
+                null,
                 "Welcome to Monopoly!\n"
-                        + "What would you like to do?", 
-                TITLE, 
-                0, 
-                0, 
-                picture, 
-                options, 
+                + "What would you like to do?",
+                TITLE,
+                0,
+                0,
+                picture,
+                options,
                 TITLE);
         return choice;
     }
 
     private static void checkChoice(int choice) {
-        if(choice == 0) {
+        if (choice == 0) {
+            setupGame();
             playGame();
-        }
-        else if(choice == 1) {
+        } else if (choice == 1) {
             showRules();
-        }
-        else {
+        } else {
             close();
         }
     }
 
-    private static void playGame() {
+    private static void setupGame() {
         String choice = input("Please enter the number of players\n"
-                + "from 2 - 6:");
-        
+                + "from 2 - 8:");
+        int playerNumber = convert(choice);
+        if(playerNumber > 8 || playerNumber < 2) {
+            error();
+            setupGame();
+        }
+        else {
+            // make an array 
+            Player[] players = new Player[playerNumber];
+            // loops it for how many player
+            for (int i = 0; i < playerNumber; i++) {
+                String name = input("Please enter a name:");
+                players[i].name = name;
+            }
+        }
+
     }
 
     private static void close() {
@@ -70,17 +86,9 @@ public class Monopoly {
     }
 
     private static void showRules() {
-        output("");
+
     }
 
-    private static String input(String text) {
-        String choice = JOptionPane.showInputDialog(
-                null, 
-                text, 
-                TITLE, 
-                3);
-        return choice;
-    }
     /**
      * Converts a String to an integer and calls isNumber
      *
@@ -99,6 +107,7 @@ public class Monopoly {
         //returns the integer
         return output;
     }
+
     /**
      * Checks for valid inputs
      *
@@ -137,5 +146,24 @@ public class Monopoly {
             }
         }
         return true;
+    }
+
+    private static String input(String text) {
+        String choice = JOptionPane.showInputDialog(
+                null,
+                text,
+                TITLE,
+                3);
+        return choice;
+    }
+
+    private static void error() {
+        output("Please enter a valid command");
+    }
+
+    private static void playGame() {
+        for (int i = 0; i < players.length; i++) {
+            players[i].takeTurn;
+        }
     }
 }
