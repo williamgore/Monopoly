@@ -66,10 +66,11 @@ public class Monopoly {
         }
         else {
             // make an array 
-            Player[] players = new Player[playerNumber];
+            players = new Player[playerNumber];
             // loops it for how many player
             for (int i = 0; i < playerNumber; i++) {
                 String name = input("Please enter a name:");
+                players[i] = new Player();
                 players[i].name = name;
             }
         }
@@ -86,7 +87,8 @@ public class Monopoly {
     }
 
     private static void showRules() {
-
+        Player raden = new Player();
+        raden.takeTurn();
     }
 
     /**
@@ -163,7 +165,7 @@ public class Monopoly {
 
     private static void playGame() {
         for (int i = 0; i < players.length; i++) {
-            players[i].takeTurn;
+            players[i].takeTurn();
         }
     }
 }

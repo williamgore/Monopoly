@@ -32,9 +32,11 @@ public class Player {
         int doubles = 0;
         boolean isDouble = roll();
         while(isDouble == true && doubles < 3) {
-            roll();
+            isDouble = roll();
             doubles++;
+            System.out.println(isDouble + "\n" + doubles);
         }
+        
     }
 
     /**
@@ -59,10 +61,11 @@ public class Player {
     }
 
     private boolean roll() {
-        int dice1 = random(1, 6);
-        int dice2 = random(1, 6);
+        int dice1 = random(1, 2);
+        int dice2 = random(1, 2);
         int move = dice1 + dice2;
         move(move);
+        System.out.println(move);
         if (dice1 == dice2){
             return true;
         }
