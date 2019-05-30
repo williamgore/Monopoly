@@ -10,19 +10,23 @@ import static monopoly.Monopoly.TITLE;
  * @since 23-May-2019
  */
 public class Player {
-
-    private int cash = 1500;
+    
+    private int turns;
+    private int cash;
     public String name;
     public int turn;
     public int people;
     private int space;
+    private boolean jailed;
 
     /**
      *
      */
-    public void Players() {
+    public Player(String name) {
+        jailed = false;
+        this.name = name;
         space = 0;
-        
+        cash = 1500;
     }
 
     /**
@@ -30,24 +34,37 @@ public class Player {
      */
     public void takeTurn() {
         System.out.println("turn start " + name);
-        int doubles = 0;
-        boolean isDouble = roll();
-        System.out.println(isDouble);
-        while(isDouble == true && doubles < 2) {
-            isDouble = roll();
-            doubles++;
-            System.out.println("is double " + isDouble);
-            if(doubles == 2) {
-                System.out.println("Go to Jail");
+        if (jailed == false) {
+            int doubles = 0;
+            boolean isDouble = roll();
+            System.out.println(isDouble);
+            while(isDouble == true && doubles < 2) {
+                isDouble = roll();
+                doubles++;
+                System.out.println("is double " + isDouble);
+                if(doubles == 2) {
+                    System.out.println("Go to Jail");
+                    jailed = true;
+                    turns = 0;
+                }
+            }
+
+            checkSpace();
+
+            if (cash == 0) {
+                System.out.println("you lose");
+            }
+            System.out.println("turn end");
+        }
+        else {
+            turns++;
+            if (roll() == true || turns == 3){
+                jailed = false;
+            }
+            else{
+                System.out.println("Stay in jail!");
             }
         }
-        
-        checkSpace();
-        
-        if (cash == 0) {
-            System.out.println("you lose");
-        }
-        System.out.println("turn end");
     }
 
     /**
@@ -77,7 +94,9 @@ public class Player {
         int move = dice1 + dice2;
         System.out.println("Space " + space);
         System.out.println("dice1 " + dice1 + "\ndice2 " + dice2);
-        move(move);
+        if (jailed == false) {
+            move(move);
+        }
         if (dice1 == dice2){
             return true;
         }

@@ -58,7 +58,7 @@ public class Monopoly {
     }
 
     private static void setupGame() {
-        spaces[0] = new Space();
+        setSpaces();
         String choice = input("Please enter the number of players\n"
                 + "from 2 - 8:");
         int playerNumber = convert(choice);
@@ -72,8 +72,7 @@ public class Monopoly {
             // loops it for how many player
             for (int i = 0; i < playerNumber; i++) {
                 String name = input("Please enter a name:");
-                players[i] = new Player();
-                players[i].name = name;
+                players[i] = new Player(name);
             }
         }
 
@@ -89,8 +88,7 @@ public class Monopoly {
     }
 
     private static void showRules() {
-        Player raden = new Player();
-        raden.takeTurn();
+        
     }
 
     /**
@@ -173,5 +171,12 @@ public class Monopoly {
                 i = -1;
             }
         }
+    }
+
+    private static void setSpaces() {
+        spaces = new Space[40];
+        spaces[0] = new Space(-200);
+        spaces[1] = new Space(60, 2, "Brown", "Mediterranean");
+        spaces[2] = new Space(1);
     }
 }
