@@ -16,7 +16,7 @@ import javax.swing.ImageIcon;
 public class Player {
     
     private int turns;
-    private int cash;
+    public int cash;
     public String name;
     public int people;
     private int space;

@@ -1,7 +1,7 @@
 package monopoly;
 
 import static monopoly.Monopoly.players;
-//import static monopoly.Monopoly.turn;
+import static monopoly.Monopoly.turn;
 
 /**
  *
@@ -59,6 +59,8 @@ public class Space {
     }
     
     public void buy() {
-        
+        owned = true;
+        owner = players[turn];
+        players[turn].cash -= price;
     }
 }
