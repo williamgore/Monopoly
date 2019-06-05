@@ -17,6 +17,8 @@ public class Monopoly {
     static Player[] players;
     static Space[] spaces;
     static int turn = 0;
+    static Board board;
+    static Player bank;
 
     /**
      * @param args the command line arguments
@@ -59,6 +61,7 @@ public class Monopoly {
     }
 
     private static void setupGame() {
+        bank = new Player();
         setSpaces();
         String choice = input("Please enter the number of players\n"
                 + "from 2 - 8:");
@@ -76,7 +79,7 @@ public class Monopoly {
                 players[i] = new Player(name);
             }
         }
-
+//        Board board = new Board();
     }
 
     private static void close() {

@@ -1,6 +1,7 @@
 package monopoly;
 
 import static monopoly.Monopoly.spaces;
+import static monopoly.Monopoly.board;
 import javax.swing.JOptionPane;
 import static monopoly.Monopoly.TITLE;
 import static monopoly.Monopoly.IMAGE_FILE;
@@ -25,6 +26,12 @@ public class Player {
     /**
      *
      */
+    public Player() {
+        cash = 1000000;
+        name = "Bank";
+    }
+    
+    
     public Player(String name) {
         jailed = false;
         this.name = name;
@@ -36,17 +43,15 @@ public class Player {
      * To create dices
      */
     public void takeTurn() {
-        System.out.println("turn start " + name);
+        System.out.println("turn start " + name + "\n$" + cash);
         if (jailed == false) {
             int doubles = 0;
             boolean isDouble = roll();
             System.out.println(isDouble);
-            checkSpace();
             while (isDouble == true && doubles < 2) {
                 isDouble = roll();
                 doubles++;
                 System.out.println("is double " + isDouble);
-                checkSpace();
                 if (doubles == 2) {
                     goToJail();
                     
@@ -90,6 +95,7 @@ public class Player {
         System.out.println("dice1 " + dice1 + "\ndice2 " + dice2);
         if (jailed == false) {
             move(move);
+            checkSpace();
         }
         if (dice1 == dice2) {
             return true;
@@ -102,6 +108,7 @@ public class Player {
             space++;            
             if (space == 40) {
                 space = 0;
+                cash += 200;
             }
         }
         
@@ -109,32 +116,24 @@ public class Player {
     }
     
     public void checkSpace() {
-        Icon picture = new ImageIcon(IMAGE_FILE);
-        output(name + " landed on " + spaces[space].name);
-        if (spaces[space].isProperty == true) {
-            if (spaces[space].owned = true) {
-                
-            } 
-            else if(spaces[space].owned = false){
-                
-            }
-        } 
-        else if (space == 29) {
+        String message = name + " landed on " + spaces[space].name;
+        output(message);
+        if (space == 29) {
             goToJail();
+        } 
+        else if (spaces[space].isProperty == true) {
+            if(spaces[space].owned == false){
+                propose();
+            }
+            else if (spaces[space].owned == true) {
+                this.cash -= spaces[space].rent;
+                (spaces[space].owner).cash += spaces[space].rent;
+                System.out.println(this.name + " payed " + 
+                        spaces[space].owner.name + " $" + spaces[space].rent);
+            } 
         } 
         else {
             cash = cash - spaces[space].rent;
-        }
-    }
-    
-    private void output(Space space) {
-        JOptionPane.showMessageDialog(
-                null,
-                "You landed on " + space + "!",
-                TITLE,
-                1);
-        if (space.isProperty = true) {
-            
         }
     }
     
@@ -148,10 +147,39 @@ public class Player {
     private void output(String text) {
         Icon picture = new ImageIcon(IMAGE_FILE);
         JOptionPane.showMessageDialog(
-                null,
-                text,
-                TITLE,
-                JOptionPane.WARNING_MESSAGE,
+                null, 
+                text, 
+                TITLE, 
+                JOptionPane.INFORMATION_MESSAGE, 
                 picture);
+        
+    }
+
+    private void propose() {
+        String name = spaces[space].name;
+        int price = spaces[space].price;
+        output(name, price);
+    }
+
+    private void output(String name, int price) {
+        Icon picture = new ImageIcon(IMAGE_FILE);
+        String message = "Would you like to buy " + name + " for $"
+                + price + "?";
+        String[] options = {"YES", "NO"};
+        int choice = JOptionPane.showOptionDialog(
+                null, 
+                message, 
+                TITLE, 
+                0, 
+                0, 
+                picture, 
+                options, 
+                0);
+        if (choice == 0 && cash >= spaces[space].price) {
+            spaces[space].buy();
+        }
+        else {
+            System.out.println("Too Poor!");
+        }
     }
 }
