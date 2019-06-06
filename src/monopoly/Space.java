@@ -40,6 +40,7 @@ public class Space {
         owned = false;
     }
     
+    
     public Space(String name){
         owned = true;
         owner = bank;
@@ -47,17 +48,21 @@ public class Space {
         rent = -50;
     } 
     
+    // Creates railroads
     public Space(boolean isRailroad, int price, String name){
+        this.isProperty = true;
         this.name = name;
         this.price = price;
         this.isRailroad = true;
     } 
+    
     
     public Space(String name, int price){
         isProperty = true;
         this.name = name;
         this.price = price;
     }
+    
 
     public Space(boolean jailed, String name) {
         this.name = name;
