@@ -55,7 +55,6 @@ public class Player {
                 System.out.println("is double " + isDouble);
                 if (doubles == 2) {
                     goToJail();
-                    
                 }
             }
         } else {
