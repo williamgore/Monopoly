@@ -186,8 +186,6 @@ public class Monopoly {
 
     private static void playGame() {
         
-        players[0].takeTurn();
-        
     }
 
     private static void setSpaces() {
