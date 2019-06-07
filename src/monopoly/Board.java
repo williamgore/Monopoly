@@ -23,7 +23,9 @@ public class Board extends javax.swing.JFrame {
     public Board() {
         initComponents();
         this.setVisible(true);
-        this.setSize(1365, 2000);// change the size
+        this.setSize(1745, 2000);// change the size
+        btnHouse.setVisible(false);
+        btnSell.setVisible(false);
     }
 
     /**
@@ -38,8 +40,6 @@ public class Board extends javax.swing.JFrame {
         lblPicture = new javax.swing.JLabel();
         btnExit = new javax.swing.JButton();
         btnHouse = new javax.swing.JButton();
-        btnProperties = new javax.swing.JButton();
-        btnMoney = new javax.swing.JButton();
         btnSell = new javax.swing.JButton();
         lblMessage = new javax.swing.JLabel();
         btnEnd = new javax.swing.JButton();
@@ -59,15 +59,6 @@ public class Board extends javax.swing.JFrame {
         });
 
         btnHouse.setText("house");
-
-        btnProperties.setText("properties");
-
-        btnMoney.setText("Money");
-        btnMoney.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnMoneyActionPerformed(evt);
-            }
-        });
 
         btnSell.setText("sell");
 
@@ -96,9 +87,7 @@ public class Board extends javax.swing.JFrame {
                                 .addComponent(btnEnd, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(btnExit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(btnSell, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnMoney, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnProperties, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
-                                .addComponent(btnHouse, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                                .addComponent(btnHouse, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)))))
                 .addGap(0, 84, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -108,15 +97,11 @@ public class Board extends javax.swing.JFrame {
                 .addComponent(lblTurn, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(lblMessage, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(111, 111, 111)
+                .addGap(222, 222, 222)
                 .addComponent(btnHouse, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnProperties, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnMoney, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnSell, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnSell, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnEnd, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnExit, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -129,10 +114,6 @@ public class Board extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnMoneyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMoneyActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnMoneyActionPerformed
-
     private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
         // TODO add your handling code here:
         this.setVisible(false);
@@ -143,6 +124,8 @@ public class Board extends javax.swing.JFrame {
 
     private void btnEndActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEndActionPerformed
         // TODO add your handling code here:
+        btnHouse.setVisible(true);
+        btnSell.setVisible(true);
         btnEnd.setText("End turn");
         turn++;
         updateLabels();
@@ -208,8 +191,6 @@ public class Board extends javax.swing.JFrame {
     private javax.swing.JButton btnEnd;
     private javax.swing.JButton btnExit;
     private javax.swing.JButton btnHouse;
-    private javax.swing.JButton btnMoney;
-    private javax.swing.JButton btnProperties;
     private javax.swing.JButton btnSell;
     private javax.swing.JLabel lblMessage;
     private javax.swing.JLabel lblPicture;

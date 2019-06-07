@@ -58,8 +58,7 @@ public class Monopoly {
 
     private static void checkChoice(int choice) {
         if (choice == 0) {
-            setupGame();
-            playGame();
+            startGame();
         } else if (choice == 1) {
             showRules();
         } else {
@@ -67,7 +66,7 @@ public class Monopoly {
         }
     }
 
-    private static void setupGame() {
+    private static void startGame() {
         bank = new Player();
         setSpaces();
         String choice = input("Please enter the number of players\n"
@@ -75,7 +74,7 @@ public class Monopoly {
         int playerNumber = convert(choice);
         if(playerNumber > 8 || playerNumber < 2) {
             error();
-            setupGame();
+            startGame();
         }
         else {
             // make an array 
@@ -182,10 +181,6 @@ public class Monopoly {
 
     private static void error() {
         output("Please enter a valid command");
-    }
-
-    private static void playGame() {
-        
     }
 
     private static void setSpaces() {

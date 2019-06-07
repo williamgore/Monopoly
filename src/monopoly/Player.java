@@ -49,7 +49,7 @@ public class Player {
             int doubles = 0;
             boolean isDouble = roll();
             System.out.println(isDouble);
-            while (isDouble == true && doubles < 2) {
+            while (isDouble == true && doubles < 3) {
                 isDouble = roll();
                 doubles++;
                 System.out.println("is double " + isDouble);
@@ -153,14 +153,14 @@ public class Player {
                         System.out.println("Error, railroads not between"
                                 + " 1 and 4");
                     }
-                    System.out.println(this.name + " payed " + 
+                    output(this.name + " payed " + 
                             spaces[space].owner.name + " $" + 
                             rent);
                 }
                 else {
                     this.cash -= spaces[space].rent;
                     (spaces[space].owner).cash += spaces[space].rent;
-                    System.out.println(this.name + " payed " + 
+                    output(this.name + " payed " + 
                             spaces[space].owner.name + " $" + 
                             spaces[space].rent);
                 }
@@ -215,8 +215,8 @@ public class Player {
                 railroads++;
             }
         }
-        else {
-            System.out.println("Too Poor!");
+        else if(choice == 0 && cash <= spaces[space].price){
+            output("Too Poor!");
         }
     }
 }
