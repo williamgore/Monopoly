@@ -86,7 +86,7 @@ public class Monopoly {
                 players[i] = new Player(name);
             }
         }
-//        Board board = new Board();
+        Board board = new Board();
     }
 
     private static void close() {
@@ -108,6 +108,8 @@ public class Monopoly {
         } catch (IOException ex) {
             Logger.getLogger(Board.class.getName()).log(Level.SEVERE, null, ex);
         }
+        int choice = intro();
+        checkChoice(choice);
     }
 
     /**
@@ -183,14 +185,7 @@ public class Monopoly {
     }
 
     private static void playGame() {
-        for (turn = 0; turn < players.length; turn++) {
-            players[turn].takeTurn();
-            System.out.println(turn);
-            if (turn == players.length - 1) {
-                turn = -1;
-            }
-            System.out.println("turn end");
-        }
+        players[0].takeTurn();
     }
 
     private static void setSpaces() {
