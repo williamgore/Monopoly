@@ -18,6 +18,8 @@ public class Space {
     public int rent;
     public boolean owned = false;
     public boolean isRailroad;
+    public boolean isUtility;
+    public boolean isCC;
     private String colour;
     public Player owner;
     
@@ -44,6 +46,7 @@ public class Space {
     
     
     public Space(String name){
+        isCC = true;
         owned = true;
         owner = bank;
         this.name = name;
@@ -52,14 +55,20 @@ public class Space {
     
     // Creates railroads
     public Space(boolean isRailroad, int price, String name){
+        owned = false;
         this.isProperty = true;
         this.name = name;
         this.price = price;
         this.isRailroad = true;
     } 
     
-    
+    /**
+     * Creates utilities, water works and electric company
+     * @param name
+     * @param price 
+     */
     public Space(String name, int price){
+        isUtility = true;
         isProperty = true;
         this.name = name;
         this.price = price;
@@ -74,7 +83,7 @@ public class Space {
         owned = true;
         owner = players[turn];
         players[turn].cash -= price;
-        System.out.println(players[turn].name + " bought " + this.name +
+        bank.output(players[turn].name + " bought " + this.name +
                 " for $" + price);
     }
 }

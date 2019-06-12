@@ -7,6 +7,7 @@ import static monopoly.Monopoly.TITLE;
 import static monopoly.Monopoly.IMAGE_FILE;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 
 /**
  * Players.java - to create players
@@ -15,15 +16,16 @@ import javax.swing.ImageIcon;
  * @since 23-May-2019
  */
 public class Player {
-    
+
     private int turns;
     public int cash;
     public String name;
     public int people;
-    private int space;
+    public int space;
     private boolean jailed;
     public int railroads = 0;
-    
+    public JLabel label;
+
     /**
      *
      */
@@ -31,8 +33,7 @@ public class Player {
         cash = 1000000;
         name = "Bank";
     }
-    
-    
+
     public Player(String name) {
         jailed = false;
         this.name = name;
@@ -49,9 +50,11 @@ public class Player {
             int doubles = 0;
             boolean isDouble = roll();
             System.out.println(isDouble);
-            while (isDouble == true && doubles < 3) {
+            while (isDouble == true && doubles < 2) {
                 isDouble = roll();
-                doubles++;
+                if (isDouble == true) {
+                    doubles++;
+                }
                 System.out.println("is double " + isDouble);
                 if (doubles == 2) {
                     goToJail();
@@ -62,11 +65,12 @@ public class Player {
             if (roll() == true || turns == 3) {
                 jailed = false;
                 turns = 0;
+                cash -= 50;
             } else {
                 System.out.println("Stay in jail!");
             }
         }
-        if (cash == 0) {
+        if (cash <= 0) {
             System.out.println("you lose");
         }
     }
@@ -85,12 +89,12 @@ public class Player {
         double value = (H - L + 1) * seed + L;
         int answer = (int) value;
         return answer;
-        
+
     }
-    
+
     private boolean roll() {
-        int dice1 = random(1, 6);
-        int dice2 = random(1, 6);
+        int dice1 = random(7, 7);
+        int dice2 = random(0, 0);
         int move = dice1 + dice2;
         System.out.println("Space " + space);
         System.out.println("dice1 " + dice1 + "\ndice2 " + dice2);
@@ -103,90 +107,87 @@ public class Player {
         }
         return false;
     }
-    
+
     private void move(int move) {
         for (int i = 0; i < move; i++) {
-            space++;            
+            space++;
             if (space == 40) {
                 space = 0;
                 cash += 200;
             }
         }
-        
+
         System.out.println("space = " + space);
     }
-    
+
     public void checkSpace() {
         String message = name + " landed on " + spaces[space].name;
         output(message);
         if (space == 30) {
             goToJail();
-        } 
-        else if (spaces[space].isProperty == true) {
-            if(spaces[space].owned == false){
+        } else if (spaces[space].isCC == true) {
+            CC chance = new CC(this, random(1, 2));
+        } else if (spaces[space].isProperty == true) {
+            if (spaces[space].owned == false) {
                 propose();
-            }
-            else if (spaces[space].owned == true) {
-                if (spaces[space].isRailroad == true) {
-                    int rent = 25;
-                    if (spaces[space].owner.railroads == 1) {
-                        rent = 25;
-                        this.cash -= rent;
-                        (spaces[space].owner).cash += rent;
+            } else if (spaces[space].owned == true) {
+                if (spaces[space].owner != this) {
+                    if (spaces[space].isRailroad == true) {
+                        int rent = 25;
+                        if (spaces[space].owner.railroads == 1) {
+                            rent = 25;
+                            this.cash -= rent;
+                            (spaces[space].owner).cash += rent;
+                        } else if (spaces[space].owner.railroads == 2) {
+                            rent = 50;
+                            this.cash -= rent;
+                            (spaces[space].owner).cash += rent;
+                        } else if (spaces[space].owner.railroads == 3) {
+                            rent = 100;
+                            this.cash -= rent;
+                            (spaces[space].owner).cash += rent;
+                        } else if (spaces[space].owner.railroads == 4) {
+                            rent = 200;
+                            this.cash -= rent;
+                            (spaces[space].owner).cash += rent;
+                        } else {
+                            System.out.println("Error, railroads not between"
+                                    + " 1 and 4");
+                        }
+
+                        output(this.name + " payed "
+                                + spaces[space].owner.name + " $"
+                                + rent);
                     }
-                    else if (spaces[space].owner.railroads == 2) {
-                        rent = 50;
-                        this.cash -= rent;
-                        (spaces[space].owner).cash += rent;
-                    }
-                    else if (spaces[space].owner.railroads == 3) {
-                        rent = 100;
-                        this.cash -= rent;
-                        (spaces[space].owner).cash += rent;
-                    }
-                    else if (spaces[space].owner.railroads == 4) {
-                        rent = 200;
-                        this.cash -= rent;
-                        (spaces[space].owner).cash += rent;
-                    }
-                    else {
-                        System.out.println("Error, railroads not between"
-                                + " 1 and 4");
-                    }
-                    output(this.name + " payed " + 
-                            spaces[space].owner.name + " $" + 
-                            rent);
-                }
-                else {
+                } else {
                     this.cash -= spaces[space].rent;
                     (spaces[space].owner).cash += spaces[space].rent;
-                    output(this.name + " payed " + 
-                            spaces[space].owner.name + " $" + 
-                            spaces[space].rent);
+                    output(this.name + " payed "
+                            + spaces[space].owner.name + " $"
+                            + spaces[space].rent);
                 }
-            } 
-        } 
-        else {
+            }
+        } else {
             cash = cash - spaces[space].rent;
         }
     }
-    
+
     public void goToJail() {
         output("Go to jail!");
         jailed = true;
         space = 10;
         turns = 0;
     }
-    
-    private void output(String text) {
+
+    public void output(String text) {
         Icon picture = new ImageIcon(IMAGE_FILE);
         JOptionPane.showMessageDialog(
-                null, 
-                text, 
-                TITLE, 
-                JOptionPane.INFORMATION_MESSAGE, 
+                null,
+                text,
+                TITLE,
+                JOptionPane.INFORMATION_MESSAGE,
                 picture);
-        
+
     }
 
     private void propose() {
@@ -201,21 +202,20 @@ public class Player {
                 + price + "?";
         String[] options = {"YES", "NO"};
         int choice = JOptionPane.showOptionDialog(
-                null, 
-                message, 
-                TITLE, 
-                0, 
-                0, 
-                picture, 
-                options, 
+                null,
+                message,
+                TITLE,
+                0,
+                0,
+                picture,
+                options,
                 0);
         if (choice == 0 && cash >= spaces[space].price) {
             spaces[space].buy();
-            if (spaces[space].isRailroad == true){
+            if (spaces[space].isRailroad == true) {
                 railroads++;
             }
-        }
-        else if(choice == 0 && cash <= spaces[space].price){
+        } else if (choice == 0 && cash <= spaces[space].price) {
             output("Too Poor!");
         }
     }

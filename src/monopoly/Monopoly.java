@@ -10,6 +10,7 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 
 /**
  * Monopoly.java - to create a monopoly game
@@ -67,6 +68,8 @@ public class Monopoly {
     }
 
     private static void startGame() {
+        Board board = new Board();
+        
         bank = new Player();
         setSpaces();
         String choice = input("Please enter the number of players\n"
@@ -85,7 +88,15 @@ public class Monopoly {
                 players[i] = new Player(name);
             }
         }
-        Board board = new Board();
+        for (int i = 0; i < players.length; i++) {
+            board.labels[i].setVisible(true);
+            board.labels[i].setText(players[i].name);
+            players[i].label = board.labels[i];
+        }
+        
+        
+        board.startGame();
+        
     }
 
     private static void close() {
