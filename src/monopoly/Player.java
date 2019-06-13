@@ -93,8 +93,8 @@ public class Player {
     }
 
     private boolean roll() {
-        int dice1 = random(7, 7);
-        int dice2 = random(0, 0);
+        int dice1 = random(1, 6);
+        int dice2 = random(1, 65);
         int move = dice1 + dice2;
         System.out.println("Space " + space);
         System.out.println("dice1 " + dice1 + "\ndice2 " + dice2);
@@ -126,7 +126,7 @@ public class Player {
         if (space == 30) {
             goToJail();
         } else if (spaces[space].isCC == true) {
-            CC chance = new CC(this, random(1, 2));
+            CC chance = new CC(this, random(1, 8));
         } else if (spaces[space].isProperty == true) {
             if (spaces[space].owned == false) {
                 propose();
